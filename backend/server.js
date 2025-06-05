@@ -13,6 +13,7 @@ app.use(express.static(path.join(__dirname, '..')));
 app.post('/api/gemini', async (req, res) => {
     const { question } = req.body;
     const apiKey = process.env.GEMINI_API_KEY;
+    console.log('Gemini API Key:', apiKey); // TEMP: Remove in production
     try {
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
             method: 'POST',

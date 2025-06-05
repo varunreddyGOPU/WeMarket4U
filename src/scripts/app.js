@@ -1,7 +1,4 @@
-// This file contains the JavaScript code for the website. 
-// It handles interactivity and dynamic content on the webpage.
-
-// --- Chatbot Widget Logic ---
+// --- Client-side Chatbot Widget Logic ---
 function createChatbot() {
     // Create chat button
     const chatBtn = document.createElement('div');
@@ -36,8 +33,12 @@ function createChatbot() {
     document.body.appendChild(chatWindow);
 
     // Toggle chat window
-    chatBtn.onclick = () => chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
-    chatWindow.querySelector('#chatbot-close').onclick = () => chatWindow.style.display = 'none';
+    chatBtn.onclick = () => {
+        chatWindow.style.display = chatWindow.style.display === 'block' ? 'none' : 'block';
+    };
+    chatWindow.querySelector('#chatbot-close').onclick = () => {
+        chatWindow.style.display = 'none';
+    };
 
     // Chatbot logic
     const messages = chatWindow.querySelector('#chatbot-messages');
@@ -65,12 +66,9 @@ function createChatbot() {
             });
             const data = await response.json();
             messages.lastChild.remove();
-            if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
-                addMessage(data.candidates[0].content.parts[0].text.trim(), 'bot');
-            } else {
-                addMessage('Sorry, I could not get an answer right now.', 'bot');
-            }
-        } catch (err) {
+            const answer = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+            addMessage(answer || 'Sorry, I could not get an answer right now.', 'bot');
+        } catch {
             messages.lastChild.remove();
             addMessage('Sorry, there was an error connecting to the AI.', 'bot');
         }
@@ -86,63 +84,36 @@ function createChatbot() {
     };
 }
 
-// --- Existing logic (if you want to keep it) ---
-document.addEventListener('DOMContentLoaded', function() {
-    // Optional: Remove or update this block if not needed
-    /*
-    const welcomeMessage = document.getElementById('welcome-message');
-    if (welcomeMessage) {
-        welcomeMessage.textContent = 'Welcome to WeMarket4U!';
-    }
-
-    const items = [
-        { name: 'Product 1', price: 10 },
-        { name: 'Product 2', price: 15 },
-        { name: 'Product 3', price: 20 }
-    ];
-
-    const itemList = document.getElementById('item-list');
-    if (itemList) {
-        items.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${item.name} - $${item.price}`;
-            itemList.appendChild(listItem);
-        });
-    }
-
-    const cartButton = document.getElementById('cart-button');
-    if (cartButton) {
-        cartButton.addEventListener('click', function() {
-            alert('Cart functionality is not implemented yet.');
-        });
-    }
-    */
-    createChatbot();
-});
+document.addEventListener('DOMContentLoaded', createChatbot);
 
 // --- Server-side code (Node.js + Express) ---
-require('dotenv').config();
-const express = require('express');
-const fetch = require('node-fetch');
-const app = express();
-app.use(express.json());
+if (typeof require !== 'undefined' && typeof module !== 'undefined' && require.main === module) {
+    require('dotenv').config();
+    const express = require('express');
+    const fetch = require('node-fetch');
+    const app = express();
+    app.use(express.json());
 
-app.post('/api/gemini', async (req, res) => {
-    const { question } = req.body;
-    const apiKey = process.env.GEMINI_API_KEY;
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            contents: [{
-                parts: [{ text: question }]
-            }]
-        })
+    app.post('/api/gemini', async (req, res) => {
+        const { question } = req.body;
+        const apiKey = process.env.GEMINI_API_KEY;
+        try {
+            const response = await fetch(
+                `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: question }] }]
+                    })
+                }
+            );
+            const data = await response.json();
+            res.json(data);
+        } catch (err) {
+            res.status(500).json({ error: 'AI service error' });
+        }
     });
-    const data = await response.json();
-    res.json(data);
-});
 
-app.listen(3000, () => console.log('Server running on port 3000'));
-GEMINI_API_KEY=your_real_gemini_api_key
-// GEMINI_API_KEY=your_real_gemini_api_key
+    app.listen(3000, () => console.log('Server running on port 3000'));
+}
