@@ -55,20 +55,24 @@ function createChatbot() {
         messages.scrollTop = messages.scrollHeight;
     }
 
-    function botReply(question) {
-        const q = question.toLowerCase();
-        if (q.includes('price') || q.includes('cost')) {
-            addMessage('Our products range from $10 to $20. For detailed pricing, please specify the product.', 'bot');
-        } else if (q.includes('product 1')) {
-            addMessage('Product 1 costs $10.', 'bot');
-        } else if (q.includes('product 2')) {
-            addMessage('Product 2 costs $15.', 'bot');
-        } else if (q.includes('product 3')) {
-            addMessage('Product 3 costs $20.', 'bot');
-        } else if (q.includes('hello') || q.includes('hi')) {
-            addMessage('Hello! How can I help you with pricing or cost questions?', 'bot');
-        } else {
-            addMessage('Sorry, I can answer questions about cost and pricing. Please ask about a product or service.', 'bot');
+    async function botReply(question) {
+        addMessage('Thinking...', 'bot');
+        try {
+            const response = await fetch('/api/gemini', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question })
+            });
+            const data = await response.json();
+            messages.lastChild.remove();
+            if (data && data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0].text) {
+                addMessage(data.candidates[0].content.parts[0].text.trim(), 'bot');
+            } else {
+                addMessage('Sorry, I could not get an answer right now.', 'bot');
+            }
+        } catch (err) {
+            messages.lastChild.remove();
+            addMessage('Sorry, there was an error connecting to the AI.', 'bot');
         }
     }
 
@@ -115,3 +119,30 @@ document.addEventListener('DOMContentLoaded', function() {
     */
     createChatbot();
 });
+
+// --- Server-side code (Node.js + Express) ---
+require('dotenv').config();
+const express = require('express');
+const fetch = require('node-fetch');
+const app = express();
+app.use(express.json());
+
+app.post('/api/gemini', async (req, res) => {
+    const { question } = req.body;
+    const apiKey = process.env.GEMINI_API_KEY;
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            contents: [{
+                parts: [{ text: question }]
+            }]
+        })
+    });
+    const data = await response.json();
+    res.json(data);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+GEMINI_API_KEY=your_real_gemini_api_key
+// GEMINI_API_KEY=your_real_gemini_api_key
