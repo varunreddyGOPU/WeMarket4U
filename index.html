@@ -51,6 +51,37 @@
             <p>Get in touch with us for more information.</p>
             <img src="src/images/contact.jpg" alt="Contact" style="max-width:100%;height:auto;">
         </section>
+        <section id="try-product" style="max-width:600px;margin:40px auto;padding:32px 24px;background:#fff;border-radius:18px;box-shadow:0 4px 24px rgba(79,140,255,0.07);">
+          <h2>Try Our Product</h2>
+          <form id="try-form" enctype="multipart/form-data">
+            <label>
+              Name:<br>
+              <input type="text" name="name" required style="width:100%;margin-bottom:10px;">
+            </label><br>
+            <label>
+              Email:<br>
+              <input type="email" name="email" required style="width:100%;margin-bottom:10px;">
+            </label><br>
+            <label>
+              Phone Number:<br>
+              <input type="tel" name="phone" required style="width:100%;margin-bottom:10px;">
+            </label><br>
+            <label>
+              Prompt:<br>
+              <textarea name="prompt" required style="width:100%;margin-bottom:10px;"></textarea>
+            </label><br>
+            <label>
+              Logo (PNG/JPG):<br>
+              <input type="file" name="logo" accept="image/*" required style="margin-bottom:10px;">
+            </label><br>
+            <label>
+              Additional Information:<br>
+              <textarea name="additional_prompt" style="width:100%;margin-bottom:10px;"></textarea>
+            </label><br>
+            <button type="submit" class="button">Try Now</button>
+          </form>
+          <div id="try-result" style="margin-top:24px;"></div>
+        </section>
     </main>
     <footer>
         <p>&copy; 2025 WeMarket4U. All rights reserved.</p>

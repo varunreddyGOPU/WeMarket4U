@@ -117,3 +117,40 @@ if (typeof require !== 'undefined' && typeof module !== 'undefined' && require.m
 
     app.listen(3000, () => console.log('Server running on port 3000'));
 }
+
+<script>
+document.getElementById('try-form').onsubmit = async function(e) {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+
+  // Only send fields required by backend
+  const backendData = new FormData();
+  backendData.append('prompt', formData.get('prompt'));
+  backendData.append('logo', formData.get('logo'));
+  backendData.append('additional_prompt', formData.get('additional_prompt'));
+
+  const resultDiv = document.getElementById('try-result');
+  resultDiv.innerHTML = "Processing...";
+
+  try {
+    const response = await fetch('/generate_image_with_logo_and_description', {
+      method: 'POST',
+      body: backendData
+    });
+    const data = await response.json();
+    if (response.ok) {
+      resultDiv.innerHTML = `
+        <h3>Generated Image</h3>
+        <img src="/${data.output_image_path}" alt="Generated" style="max-width:100%;border-radius:12px;box-shadow:0 2px 12px rgba(79,140,255,0.08);margin-bottom:16px;">
+        <h3>Description</h3>
+        <div style="white-space:pre-line;">${data.description}</div>
+      `;
+    } else {
+      resultDiv.innerHTML = `<span style="color:red;">${data.detail || data.error || "An error occurred."}</span>`;
+    }
+  } catch (err) {
+    resultDiv.innerHTML = `<span style="color:red;">Error: ${err.message}</span>`;
+  }
+};
+</script>
