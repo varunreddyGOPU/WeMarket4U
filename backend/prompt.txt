@@ -1,37 +1,31 @@
 Image Path: output_with_logo_lb.png
-Prompt: A warm, inviting boutique filled with beautifully displayed children's clothing and accessories, ranging from newborn to older kids. Each item is shown with attention to detail, highlighting soft, premium fabrics and timeless designs. In the center, a joyful parent and their child are browsing together, smiling as they pick out an outfit. The store atmosphere is bright, cozy, and organized, with subtle branding elements for "The Little + Brave." The overall mood is loving and nostalgic, emphasizing quality, durability, and the idea that these pieces can be cherished and passed from one child to the next.
-Description: ## Discover The Little + Brave: Where Childhood Memories Begin
+Prompt: A lively, bustling city street scene featuring a group of friends laughing and enjoying Lappert’s Ice Cream together. They are holding colorful cones and cups filled with Lappert’s signature flavors, standing near a Lappert’s storefront with its recognizable signage. The background shows a vibrant urban setting with people walking by, outdoor seating, and a sense of energy and fun. The atmosphere is joyful and inviting, capturing the spirit of friendship and the premium, handcrafted quality of Lappert’s Ice Cream
+Description: Step onto a vibrant city street where laughter, friendship, and pure indulgence come together—welcome to Lappert’s Ice Cream, your destination for premium handcrafted joy!
 
-Step into The Little + Brave—a warm, enchanting boutique where timeless style and childhood wonder intertwine. Our inviting, light-filled space is thoughtfully organized with displays of beautifully crafted children’s clothing and accessories for every age, from cuddly newborns to outgoing older kids. In the heart of the boutique, you’ll find joyful parents and children browsing together, sharing laughter and memories as they select the perfect outfit to cherish.
+Picture this: A lively group of friends, their faces lit with smiles, sharing stories and savoring Lappert’s Ice Cream in colorful cones and cups. The iconic Lappert’s storefront stands behind them, its recognizable signage inviting city dwellers and visitors alike. The urban energy is electric—people stroll by, outdoor tables bustle, and there’s a delightful hum of excitement in the air. Every scoop, swirl, and sprinkle embodies the spirit of togetherness and adventure.
 
-**Unmatched Quality and Comfort**
+## **Why Choose Lappert’s Ice Cream?**
 
-At The Little + Brave, every garment is meticulously chosen for its soft, premium fabrics that feel gentle against young skin. Our designs are classic and enduring, made to withstand endless adventures and still look gorgeous in family photos. Delicate details and expert tailoring ensure that each piece is as durable as it is delightful—a true keepsake that can be lovingly passed from one child to the next[5].
+- **A Legacy of Passion and Craft**  
+  Founded in 1983 by Walter Lappert after heartfelt brainstorming sessions with his wife Mary and son Michael, Lappert’s Ice Cream was born from a quest for perfection and a dream to bring extraordinary ice cream to beloved Kauai[1][5]. Today, that same dedication to quality and flavor shines in every batch.
 
-**Thoughtfully Curated Collections**
+- **Premium, Handcrafted Quality**  
+  Lappert’s isn’t just ice cream—it’s an artisanal treat. Using only the finest ingredients—from local macadamia nuts and Kona coffee to Belgian chocolate and Madagascar vanilla beans—each bite is a taste of luxury inspired by Walter’s European heritage and love for tropical flavor adventures[2].
 
-- Clothing and accessories for newborns, toddlers, and older children
-- Timeless styles that celebrate both playfulness and sophistication
-- Gentle, natural fabrics and non-toxic dyes to keep even the most sensitive skin happy[5]
-- Durability that lets clothes become hand-me-down treasures, saving memories for years to come[5]
+- **Signature Flavors That Tell a Story**  
+  Experience a world of unique, super-premium flavors like Manila Mango, Costa Rican Plantain Cajeta, Mexican Chocolate Cinnamon Swirl, and Philippine Macapuno Peach Sorbet. With over 125 gourmet creations, there’s a signature delight for everyone’s palate[1][2].
 
-**A Magical Shopping Experience**
+- **A Tradition of Joy and Togetherness**  
+  From the original green marble table in Walter’s home to thriving city streets and island escapes, every Lappert’s moment is about connection—celebrating friendship, family, and the little pleasures that make life sweet[1][5].
 
-Beyond our beautiful racks and cozy atmosphere, The Little + Brave transforms shopping into a heartwarming experience. Watch children’s faces light up as they discover surprise touches and curated displays. Our knowledgeable staff is always on hand, guiding parents to choose pieces that match their little one’s unique personality and needs.
+## **Discover the Lappert’s Experience**
 
-**Premium Unboxing Moments**
+- Warm, welcoming storefronts with a legacy as rich as their flavors
+- Handcrafted ice creams, made in small batches for ultimate freshness
+- A joyful atmosphere that brings people together—perfect for city adventures and cherished memories
 
-The magic doesn’t end in-store. Every purchase is lovingly wrapped in exclusive Little + Brave packaging—a moment of joy for both parents and children. Unbox thoughtfully packed outfits and discover small, whimsical surprises inside that add a spark of excitement, reinforcing the quality and consideration woven into every piece.
+## **Taste the Adventure—Join the Lappert’s Family!**
 
-**Why Choose The Little + Brave?**
+Treat yourself and your friends to the unrivaled joy of Lappert’s Ice Cream. Visit our lively storefront, pick your favorite signature flavor, and let every scoop transport you to the heart of Kauai—where dreams, quality, and laughter meet in every bite.
 
-- Premium, child-centered design: Style and comfort without compromise[5]
-- Heirloom quality: Built to last and ready to be passed on with love
-- Thoughtful, sustainable materials: Perfect for modern, eco-conscious families[5]
-- Exceptional in-store and unboxing experiences that spark joy and nostalgia[2][4]
-
-## Begin Your Little + Brave Story Today
-
-Visit us in-store to experience the warmth of The Little + Brave, or shop online for a chance to create lasting memories with our premium children’s clothing. Dress your little one in pieces made for adventure, love, and everything in between—because childhood is worth celebrating, one cherished outfit at a time.
-
-**Make every moment magical. Choose The Little + Brave.**
+**Don’t wait—step into Lappert’s today and make every moment a celebration of flavor and friendship!**

@@ -70,17 +70,18 @@
               Prompt:<br>
               <textarea name="prompt" required style="width:100%;margin-bottom:10px;"></textarea>
             </label><br>
+            <label for="additional_prompt">Additional Notes (Optional):</label>
+            <textarea id="additional_prompt" name="additional_prompt" placeholder="e.g., Make it look like a Nike ad, use blue and silver colors" style="width:100%;margin-bottom:10px;"></textarea>
             <label>
               Logo (PNG/JPG):<br>
               <input type="file" name="logo" accept="image/*" required style="margin-bottom:10px;">
             </label><br>
-            <label>
-              Additional Information:<br>
-              <textarea name="additional_prompt" style="width:100%;margin-bottom:10px;"></textarea>
-            </label><br>
             <button type="submit" class="button">Try Now</button>
           </form>
-          <div id="try-result" style="margin-top:24px;"></div>
+          <div id="loader" style="display:none;">
+            <p>Your AI agent is thinking... Please wait.</p>
+          </div>
+          <div id="results" style="margin-top:24px;"></div>
         </section>
     </main>
     <footer>
