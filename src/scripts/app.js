@@ -84,73 +84,224 @@ function createChatbot() {
     };
 }
 
-document.addEventListener('DOMContentLoaded', createChatbot);
+// Smooth scroll is handled by CSS (scroll-behavior). Keep a small enhancement for older browsers.
+function enableSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener('click', (e) => {
+            const id = a.getAttribute('href');
+            if (!id || id === '#') return;
+            const el = document.querySelector(id);
+            if (el) {
+                e.preventDefault();
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+}
 
-// --- Server-side code (Node.js + Express) ---
-if (typeof require !== 'undefined' && typeof module !== 'undefined' && require.main === module) {
-    require('dotenv').config();
-    const express = require('express');
-    const fetch = require('node-fetch');
-    const app = express();
-    app.use(express.json());
+function initTryForm() {
+    const form = document.getElementById('try-form');
+    if (!form) return;
+    const loader = document.getElementById('loader');
+    const results = document.getElementById('results');
+    const img = document.getElementById('output-img');
+    const actions = document.getElementById('result-actions');
+    const downloadBtn = document.getElementById('download-btn');
+    const shareBtn = document.getElementById('share-btn');
+    const description = document.getElementById('description');
 
-    app.post('/api/gemini', async (req, res) => {
-        const { question } = req.body;
-        const apiKey = process.env.GEMINI_API_KEY;
-        try {
-            const response = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`,
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: question }] }]
-                    })
+    const nameEl = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const promptEl = document.getElementById('prompt');
+    const logoEl = document.getElementById('logo');
+        const logoPreview = document.getElementById('logo-preview');
+        const previewImg = document.getElementById('preview-img');
+        const previewSkeleton = document.getElementById('preview-skeleton');
+
+    const nameErr = document.getElementById('name-error');
+    const emailErr = document.getElementById('email-error');
+    const promptErr = document.getElementById('prompt-error');
+    const logoErr = document.getElementById('logo-error');
+
+    function validate() {
+        let ok = true;
+        // Name (optional in backend but good UX to validate if filled)
+        if (nameEl && nameEl.value && nameEl.value.trim().length < 2) {
+            nameErr.textContent = 'Please enter at least 2 characters.';
+            ok = false;
+        } else if (nameErr) nameErr.textContent = '';
+
+        // Email basic validation
+        const emailVal = emailEl?.value?.trim();
+        if (!emailVal) {
+            emailErr.textContent = 'Email is required.';
+            ok = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+            emailErr.textContent = 'Please enter a valid email.';
+            ok = false;
+        } else emailErr.textContent = '';
+
+        // Prompt
+        if (!promptEl?.value?.trim()) {
+            promptErr.textContent = 'Prompt is required.';
+            ok = false;
+        } else promptErr.textContent = '';
+
+        // Logo
+        const file = logoEl?.files?.[0];
+        if (!file) {
+            logoErr.textContent = 'Logo image is required.';
+            ok = false;
+        } else if (!/^image\//.test(file.type)) {
+            logoErr.textContent = 'Only image files are allowed.';
+            ok = false;
+        } else logoErr.textContent = '';
+
+        return ok;
+    }
+
+    // Drag-and-drop
+    const dropzone = document.getElementById('dropzone');
+    if (dropzone) {
+        ;['dragenter','dragover'].forEach(evt => dropzone.addEventListener(evt, (e) => {
+            e.preventDefault(); e.stopPropagation(); dropzone.classList.add('dragover');
+        }));
+        ;['dragleave','drop'].forEach(evt => dropzone.addEventListener(evt, (e) => {
+            e.preventDefault(); e.stopPropagation(); dropzone.classList.remove('dragover');
+        }));
+        dropzone.addEventListener('drop', (e) => {
+            if (!logoEl) return;
+            const dt = e.dataTransfer;
+            if (dt && dt.files && dt.files[0]) {
+                logoEl.files = dt.files;
+                    showPreview(dt.files[0]);
+            }
+        });
+    }
+
+        function showPreview(file) {
+            if (!logoPreview) return;
+            if (!file || !/^image\//.test(file.type)) {
+                logoPreview.style.display = 'none';
+                logoPreview.src = '';
+                return;
+            }
+            const url = URL.createObjectURL(file);
+            logoPreview.src = url;
+            logoPreview.style.display = 'block';
+        }
+
+        if (logoEl) {
+            logoEl.addEventListener('change', () => {
+                const f = logoEl.files && logoEl.files[0];
+                showPreview(f);
+            });
+        }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!validate()) return;
+
+        loader.style.display = 'block';
+        results.style.display = 'none';
+        img.style.display = 'none';
+        actions.style.display = 'none';
+        description.style.display = 'none';
+        if (previewImg) previewImg.style.display = 'none';
+        if (previewSkeleton) previewSkeleton.style.display = 'block';
+
+        const formData = new FormData(form);
+        const send = new FormData();
+        send.append('prompt', formData.get('prompt'));
+        // include contact fields for email delivery
+        const emailVal = formData.get('email');
+        if (emailVal) send.append('email', emailVal);
+        const nameVal = formData.get('name');
+        if (nameVal) send.append('name', nameVal);
+        const phoneVal = formData.get('phone');
+        if (phoneVal) send.append('phone', phoneVal);
+        const logoFile = formData.get('logo');
+        if (logoFile) send.append('logo', logoFile);
+        const extra = formData.get('additional_prompt');
+        if (extra) send.append('additional_prompt', extra);
+
+            try {
+                const res = await fetch('/api/generate-image', { method: 'POST', body: send });
+                let data = {};
+                try {
+                    data = await res.json();
+                } catch (parseErr) {
+                    // Non-JSON or empty body; surface a helpful message
+                    throw new Error(`Request failed (status ${res.status}).`);
                 }
-            );
-            const data = await response.json();
-            res.json(data);
+            loader.style.display = 'none';
+            if (!res.ok) {
+                const msg = data?.detail || data?.error || 'An error occurred.';
+                results.style.display = 'block';
+                results.innerHTML = `<span style="color:#dc2626;">${msg}</span>`;
+                return;
+            }
+            const imageUrl = data.imageUrl || data.output_image_path || '';
+            const desc = data.description || '';
+            if (imageUrl) {
+                img.src = imageUrl;
+                img.style.display = 'block';
+                results.style.display = 'block';
+                actions.style.display = 'flex';
+                        if (previewImg) {
+                            previewImg.src = imageUrl;
+                            previewImg.style.display = 'block';
+                        }
+                        if (previewSkeleton) previewSkeleton.style.display = 'none';
+            }
+            if (desc) {
+                description.textContent = desc;
+                description.style.display = 'block';
+            }
+
+            // Download
+            downloadBtn.onclick = () => {
+                const a = document.createElement('a');
+                a.href = imageUrl;
+                a.download = 'generated-image.png';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+            };
+
+            // Share (copy link)
+            shareBtn.onclick = async () => {
+                try {
+                    await navigator.clipboard.writeText(imageUrl);
+                    shareBtn.textContent = 'Link Copied!';
+                    setTimeout(() => (shareBtn.textContent = 'Copy Link'), 1500);
+                } catch {
+                    shareBtn.textContent = 'Copy Failed';
+                    setTimeout(() => (shareBtn.textContent = 'Copy Link'), 1500);
+                }
+            };
         } catch (err) {
-            res.status(500).json({ error: 'AI service error' });
+            loader.style.display = 'none';
+            results.style.display = 'block';
+            results.innerHTML = `<span style="color:#dc2626;">Error: ${err.message}</span>`;
+                if (previewSkeleton) previewSkeleton.style.display = 'none';
         }
     });
 
-    app.listen(3000, () => console.log('Server running on port 3000'));
+        // Prompt chips
+        document.querySelectorAll('.prompt-chips button')?.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                const chip = btn.getAttribute('data-prompt');
+                if (chip) {
+                    promptEl.value = chip;
+                    promptEl.focus();
+                }
+            });
+        });
 }
 
-<script>
-document.getElementById('try-form').onsubmit = async function(e) {
-  e.preventDefault();
-  const form = e.target;
-  const formData = new FormData(form);
-
-  // Only send fields required by backend
-  const backendData = new FormData();
-  backendData.append('prompt', formData.get('prompt'));
-  backendData.append('logo', formData.get('logo'));
-  backendData.append('additional_prompt', formData.get('additional_prompt'));
-
-  const resultDiv = document.getElementById('try-result');
-  resultDiv.innerHTML = "Processing...";
-
-  try {
-    const response = await fetch('/generate_image_with_logo_and_description', {
-      method: 'POST',
-      body: backendData
-    });
-    const data = await response.json();
-    if (response.ok) {
-      resultDiv.innerHTML = `
-        <h3>Generated Image</h3>
-        <img src="/${data.output_image_path}" alt="Generated" style="max-width:100%;border-radius:12px;box-shadow:0 2px 12px rgba(79,140,255,0.08);margin-bottom:16px;">
-        <h3>Description</h3>
-        <div style="white-space:pre-line;">${data.description}</div>
-      `;
-    } else {
-      resultDiv.innerHTML = `<span style="color:red;">${data.detail || data.error || "An error occurred."}</span>`;
-    }
-  } catch (err) {
-    resultDiv.innerHTML = `<span style="color:red;">Error: ${err.message}</span>`;
-  }
-};
-</script>
+document.addEventListener('DOMContentLoaded', () => {
+    createChatbot();
+    enableSmoothScroll();
+    initTryForm();
+});

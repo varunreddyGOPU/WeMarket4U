@@ -1,15 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeMarket4U</title>
-    <link rel="stylesheet" href="src/styles/main.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WeMarket4U — Grow Faster with AI-Powered Marketing</title>
+    <meta name="description" content="Trusted by 500+ businesses for e‑commerce growth, product listing, and live market analysis. Try AI-powered visuals with your brand logo." />
+    <meta name="keywords" content="ecommerce marketing, product listing, market analysis, AI image generation, branding" />
+    <meta name="theme-color" content="#4f8cff" />
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="WeMarket4U — AI-Powered Marketing" />
+    <meta property="og:description" content="Boost growth with product listing, market analysis, and on-brand AI visuals." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://wemarket4u.com" />
+    <meta property="og:image" content="src/images/one_stop_solution.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="WeMarket4U — AI-Powered Marketing" />
+    <meta name="twitter:description" content="Trusted by 500+ businesses for growth & insights." />
+    <meta name="twitter:image" content="src/images/one_stop_solution.png" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="src/styles/main.css" />
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header>
-        <h1>Welcome to WeMarket4U</h1>
-        <nav>
+    <div style="display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;width:fit-content;margin:12px auto;">
+      <img src="backend/logo.jpg" alt="WeMarket4U logo" width="72" height="72" style="border-radius:12px;box-shadow:none;" loading="lazy" />
+      <h1 style="margin:0;">WeMarket4U</h1>
+        </div>
+        <nav aria-label="Primary">
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -17,76 +38,136 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-    </header>
-    <main>
-        <section id="home">
-            <h2>Home</h2>
-            <p>Your one-stop solution for all market needs.</p>
-            <img src="src/images/market_image.png" alt="Market" style="max-width:100%;height:auto;">            
+  </header>
+  <main id="main">
+        <section id="home" aria-labelledby="hero-heading" style="display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;align-items:center;">
+            <div>
+                <h2 id="hero-heading" style="font-size:2.2rem;line-height:1.2;margin-bottom:10px;">Grow Faster with AI‑Powered Marketing</h2>
+                <p style="font-size:1.1rem;margin:0 0 16px 0;">Trusted by 500+ businesses for e‑commerce growth, product listing, and live market analysis.</p>
+                <a class="button" href="#try-product">Try It with Your Logo</a>
+            </div>
+            <div>
+                <img src="src/images/one_stop_solution.png" alt="One stop AI‑powered marketing solution" style="max-width:100%;height:auto;" loading="lazy" />
+            </div>
         </section>
         <section id="about">
             <h2>About Us</h2>
-            <p>WeMarket4U is dedicated to providing the best market services.</p>
-            <img src="src/images/team.jpg" alt="Our Team" style="max-width:100%;height:auto;">
+            <p>WeMarket4U helps brands accelerate growth with actionable insights, high‑quality product listings, and compelling, on‑brand visuals.</p>
+            <img src="src/images/team.jpg" alt="Our team collaborating on marketing strategy" style="max-width:100%;height:auto;" loading="lazy" />
         </section>
         <section id="services">
             <h2>Our Services</h2>
-            <p>Explore our wide range of services tailored for you.</p>
-            <ul>
-                <li>Product Listing</li>
-                <li>Market Analysis</li>
-                <li>Customer Support</li>
-            </ul>
-            <img src="src/images/services.jpg" alt="Services" style="max-width:100%;height:auto;">
+            <p>Explore our focused, high‑impact services tailored to your goals.</p>
+            <div class="services-grid" aria-label="Service cards">
+                <article class="service-card" tabindex="0">
+                    <div class="service-icon" aria-hidden="true">📦</div>
+                    <h3>Product Listing</h3>
+                    <p>Optimized listings with keywords, specs, and stunning visuals.</p>
+                </article>
+                <article class="service-card" tabindex="0">
+                    <div class="service-icon" aria-hidden="true">📊</div>
+                    <h3>Market Analysis</h3>
+                    <p>Data‑backed insights to refine pricing, positioning, and ads.</p>
+                </article>
+                <article class="service-card" tabindex="0">
+                    <div class="service-icon" aria-hidden="true">🤝</div>
+                    <h3>Customer Support</h3>
+                    <p>Responsive, helpful assistance that turns buyers into fans.</p>
+                </article>
+            </div>
+            <img src="src/images/services.jpg" alt="Team analyzing market data and creating listings" style="max-width:100%;height:auto;" loading="lazy" />
         </section>
         <section id="live">
             <h2>Live Market Video</h2>
-            <video controls autoplay muted loop width="100%" style="max-width:600px;">
-                <source src="src/videos/marketing_video.mp4" type="video/mp4">
+            <video controls autoplay muted loop width="100%" style="max-width:600px;" poster="src/images/market_image.png">
+                <source src="src/videos/marketing_video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
         </section>
         <section id="contact">
             <h2>Contact Us</h2>
-            <p>Get in touch with us for more information.</p>
-            <img src="src/images/contact.jpg" alt="Contact" style="max-width:100%;height:auto;">
+            <p>Get in touch for a tailored growth plan.</p>
+            <img src="src/images/contact.jpg" alt="Contact WeMarket4U" style="max-width:100%;height:auto;" loading="lazy" />
         </section>
-        <section id="try-product" style="max-width:600px;margin:40px auto;padding:32px 24px;background:#fff;border-radius:18px;box-shadow:0 4px 24px rgba(79,140,255,0.07);">
-          <h2>Try Our Product</h2>
-          <form id="try-form" enctype="multipart/form-data">
-            <label>
-              Name:<br>
-              <input type="text" name="name" required style="width:100%;margin-bottom:10px;">
-            </label><br>
-            <label>
-              Email:<br>
-              <input type="email" name="email" required style="width:100%;margin-bottom:10px;">
-            </label><br>
-            <label>
-              Phone Number:<br>
-              <input type="tel" name="phone" required style="width:100%;margin-bottom:10px;">
-            </label><br>
-            <label>
-              Prompt:<br>
-              <textarea name="prompt" required style="width:100%;margin-bottom:10px;"></textarea>
-            </label><br>
-            <label for="additional_prompt">Additional Notes (Optional):</label>
-            <textarea id="additional_prompt" name="additional_prompt" placeholder="e.g., Make it look like a Nike ad, use blue and silver colors" style="width:100%;margin-bottom:10px;"></textarea>
-            <label>
-              Logo (PNG/JPG):<br>
-              <input type="file" name="logo" accept="image/*" required style="margin-bottom:10px;">
-            </label><br>
-            <button type="submit" class="button">Try Now</button>
-          </form>
-          <div id="loader" style="display:none;">
-            <p>Your AI agent is thinking... Please wait.</p>
+        <section id="try-product" class="try-section" style="max-width:980px;margin:40px auto;padding:32px 24px;background:#fff;border-radius:18px;box-shadow:0 4px 24px rgba(79,140,255,0.07);">
+          <div class="try-header">
+            <span class="badge">Free demo</span>
+            <h2>Try Our Product</h2>
+            <p class="subtext">Generate an on‑brand visual in seconds—just add your prompt and logo.</p>
           </div>
-          <div id="results" style="margin-top:24px;"></div>
+          <div class="try-grid">
+            <div class="try-form-wrap">
+              <form id="try-form" enctype="multipart/form-data" novalidate aria-describedby="try-help">
+            <div class="form-row">
+              <label for="name">Name</label>
+              <input id="name" type="text" name="name" required aria-required="true" placeholder="Jane Doe" />
+              <small class="error" id="name-error" role="alert" aria-live="polite"></small>
+            </div>
+            <div class="form-row">
+              <label for="email">Email</label>
+              <input id="email" type="email" name="email" required aria-required="true" placeholder="jane@company.com" />
+              <small class="error" id="email-error" role="alert" aria-live="polite"></small>
+            </div>
+            <div class="form-row">
+              <label for="phone">Phone Number</label>
+              <input id="phone" type="tel" name="phone" inputmode="tel" placeholder="+1 555 123 4567" />
+            </div>
+            <div class="form-row">
+              <label for="prompt">Prompt</label>
+              <textarea id="prompt" name="prompt" required aria-required="true" placeholder="Create a premium product banner for a smart watch in blue and silver."></textarea>
+              <small class="error" id="prompt-error" role="alert" aria-live="polite"></small>
+                  <div class="prompt-chips" aria-label="Prompt suggestions">
+                    <button type="button" data-prompt="Create a luxury perfume banner with gold accents and soft lighting">Luxury perfume</button>
+                    <button type="button" data-prompt="Modern sneaker ad with bold typography and blue/silver colors">Sneaker ad</button>
+                    <button type="button" data-prompt="Minimalist smartwatch banner with clean layout and neon highlights">Smartwatch banner</button>
+                  </div>
+            </div>
+            <div class="form-row">
+              <label for="additional_prompt">Additional Notes (Optional)</label>
+              <textarea id="additional_prompt" name="additional_prompt" placeholder="Make it look like a Nike ad, use blue and silver colors."></textarea>
+            </div>
+            <div class="form-row">
+              <label for="logo">Logo (PNG/JPG)</label>
+              <div id="dropzone" class="dropzone" aria-label="Drop logo image here or click to upload">
+                <p>Drag & drop your logo here, or click to select.</p>
+                <input id="logo" type="file" name="logo" accept="image/*" required aria-required="true" />
+                <img id="logo-preview" alt="Logo preview" style="display:none;max-height:60px;margin:8px auto 0;" />
+              </div>
+              <small class="error" id="logo-error" role="alert" aria-live="polite"></small>
+            </div>
+            <button type="submit" class="button cta" aria-label="Generate image with your logo">Try Now</button>
+            <p id="try-help" style="margin-top:8px;color:#6b7280;">Your file is processed securely. Only images are accepted.</p>
+                <ul class="trust-row" aria-label="Assurances">
+                  <li>🔒 Secure upload</li>
+                  <li>⚡ ~10s avg</li>
+                  <li>💳 No credit card</li>
+                </ul>
+                <div id="loader" style="display:none;" aria-live="polite">
+                  <div class="spinner" aria-hidden="true"></div>
+                  <p style="margin-top:8px;">Your AI agent is thinking... Please wait.</p>
+                </div>
+                <div id="results" style="margin-top:24px; display:none;">
+                  <h3>Your Generated Image:</h3>
+                  <img id="output-img" style="max-width:100%;display:none;" alt="Generated marketing visual" />
+                  <div id="result-actions" style="margin-top:12px;display:none;gap:8px;">
+                    <button id="download-btn" class="button" type="button">Download</button>
+                    <button id="share-btn" class="button" type="button">Copy Link</button>
+                  </div>
+                  <div id="description" style="white-space:pre-line;margin-top:16px;display:none;"></div>
+                </div>
+              </form>
+            </div>
+            <aside class="preview-panel" aria-label="Live preview">
+              <div id="preview-skeleton" class="shimmer"></div>
+              <img id="preview-img" alt="Live preview image" style="display:none;max-width:100%;border-radius:12px;" />
+              <p class="preview-hint">Preview updates after generation.</p>
+            </aside>
+          </div>
         </section>
     </main>
     <footer>
         <p>&copy; 2025 WeMarket4U. All rights reserved.</p>
     </footer>
-    <script src="src/scripts/app.js"></script>
+    <script defer src="src/scripts/app.js"></script>
 </body>
 </html>

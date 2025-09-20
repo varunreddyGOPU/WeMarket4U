@@ -9,6 +9,7 @@ import os
 import tempfile
 import requests
 from dotenv import load_dotenv
+from starlette.staticfiles import StaticFiles
 
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -17,6 +18,7 @@ SONAR_API_URL = "https://api.perplexity.ai/chat/completions"
 client = genai.Client(api_key=GEMINI_API_KEY)
 
 app = FastAPI()
+app.mount("/backend", StaticFiles(directory="."), name="backend-static")
 
 def generate_description(prompt: str, additional_prompt: Optional[str] = None) -> str:
     """
@@ -79,10 +81,15 @@ async def generate_image_with_logo_and_description(
 ):
     if logo is None:
         raise HTTPException(status_code=400, detail="Logo file is required")
+    if logo.content_type is None or not logo.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="Only image files are allowed")
     
     # Use tempfile for safer file handling
     with tempfile.NamedTemporaryFile(delete=False, suffix=os.path.splitext(logo.filename)[1]) as logo_temp:
-        logo_temp.write(await logo.read())
+        data = await logo.read()
+        if len(data) > 5 * 1024 * 1024:
+            raise HTTPException(status_code=413, detail="File too large (max 5MB)")
+        logo_temp.write(data)
         logo_temp_path = logo_temp.name
 
     try:
@@ -115,7 +122,7 @@ async def generate_image_with_logo_and_description(
         os.unlink(logo_temp_path)
         
         return {
-            "output_image_path": output_path,
+            "output_image_path": f"backend/{output_path}",
             "description": description
         }
     except Exception as e:
