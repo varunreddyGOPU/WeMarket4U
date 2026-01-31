@@ -1,0 +1,11 @@
+# Force Node.js for Railway deployment
+providers = ["node"]
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "npm"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[start]
+cmd = "node server.js"
