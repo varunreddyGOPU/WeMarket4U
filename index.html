@@ -31,6 +31,7 @@
 
     <!-- Stylesheet -->
     <link rel="stylesheet" href="src/styles/style.css" />
+    <link rel="stylesheet" href="src/styles/auth.css" />
 
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>" />
@@ -40,24 +41,132 @@
     <!-- Skip to content (accessibility) -->
     <a class="skip-link" href="#main">Skip to content</a>
 
+    <!-- ===== AUTH MODAL ===== -->
+    <div id="auth-overlay" class="auth-overlay" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <div class="auth-modal">
+            <button class="auth-close" id="auth-close" aria-label="Close login dialog">&times;</button>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Log In</button>
+                <button class="auth-tab" data-tab="signup">Sign Up</button>
+            </div>
+
+            <!-- LOGIN FORM -->
+            <form id="login-form" class="auth-form" novalidate>
+                <h2 id="auth-title">Welcome Back &#x1F44B;</h2>
+                <p class="auth-subtitle">Log in to access your free AI image generator</p>
+
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" name="email" placeholder="jane@company.com" required autocomplete="email" />
+                    <span class="error-msg" id="login-email-error" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="••••••••" required autocomplete="current-password" />
+                    <span class="error-msg" id="login-password-error" role="alert" aria-live="polite"></span>
+                </div>
+
+                <button type="submit" class="button primary full-width">Log In</button>
+                <p class="auth-switch">Don't have an account? <a href="#" data-switch="signup">Sign up free</a></p>
+                <span class="error-msg" id="login-error" role="alert" aria-live="polite"></span>
+            </form>
+
+            <!-- SIGNUP FORM -->
+            <form id="signup-form" class="auth-form" style="display:none;" novalidate>
+                <h2>Create Your Free Account &#x1F680;</h2>
+                <p class="auth-subtitle">Get started — no credit card required</p>
+
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" name="name" placeholder="Jane Doe" required autocomplete="name" />
+                    <span class="error-msg" id="signup-name-error" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" name="email" placeholder="jane@company.com" required autocomplete="email" />
+                    <span class="error-msg" id="signup-email-error" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-phone">Phone Number</label>
+                    <input type="tel" id="signup-phone" name="phone" placeholder="+1 555 123 4567" autocomplete="tel" />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-business">Business Name</label>
+                    <input type="text" id="signup-business" name="business" placeholder="My Awesome Shop" autocomplete="organization" />
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-business-type">Business Type</label>
+                    <select id="signup-business-type" name="business_type">
+                        <option value="">Select your business type</option>
+                        <option value="small">Small Business (1–10 employees)</option>
+                        <option value="medium">Medium Business (11–100 employees)</option>
+                        <option value="freelancer">Freelancer / Solopreneur</option>
+                        <option value="startup">Startup</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" placeholder="Min 6 characters" required autocomplete="new-password" minlength="6" />
+                    <span class="error-msg" id="signup-password-error" role="alert" aria-live="polite"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="signup-terms" name="terms" required />
+                        I agree to the <a href="#" target="_blank">Terms of Service</a> &amp; <a href="#" target="_blank">Privacy Policy</a>
+                    </label>
+                    <span class="error-msg" id="signup-terms-error" role="alert" aria-live="polite"></span>
+                </div>
+
+                <button type="submit" class="button primary full-width">Create Free Account</button>
+                <p class="auth-switch">Already have an account? <a href="#" data-switch="login">Log in</a></p>
+                <span class="error-msg" id="signup-error" role="alert" aria-live="polite"></span>
+            </form>
+        </div>
+    </div>
+
     <!-- ===== NAVIGATION ===== -->
     <nav id="navbar" aria-label="Main navigation">
         <div class="nav-container">
             <a href="#" class="nav-logo" aria-label="WeMarket4U Home">
-                <img src="backend/logo.jpg" alt="WeMarket4U logo" width="40" height="40" class="nav-logo-img" loading="lazy" />
+                <img src="src/images/logo.svg" alt="WeMarket4U logo" width="40" height="40" class="nav-logo-img" loading="lazy" />
                 <span class="logo-text">WeMarket<span class="logo-accent">4U</span></span>
             </a>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
-                <span></span><span></span><span></span>
-            </button>
             <ul class="nav-links" id="nav-links" role="menubar">
                 <li role="none"><a href="#home" role="menuitem">Home</a></li>
                 <li role="none"><a href="#about" role="menuitem">About</a></li>
+                <li role="none"><a href="#smb-value" role="menuitem">For SMBs</a></li>
                 <li role="none"><a href="#services" role="menuitem">Services</a></li>
                 <li role="none"><a href="#try-product" role="menuitem">Try Now</a></li>
                 <li role="none"><a href="#history-section" role="menuitem">My History</a></li>
                 <li role="none"><a href="#contact" role="menuitem">Contact</a></li>
+                <!-- Mobile-only auth links -->
+                <li role="none" class="nav-links-auth-mobile"><a href="#" role="menuitem" id="mobile-login-link">Log In</a></li>
+                <li role="none" class="nav-links-auth-mobile"><a href="#" role="menuitem" id="mobile-signup-link">Sign Up Free</a></li>
+                <li role="none" class="nav-links-logout-mobile" style="display:none;"><a href="#" role="menuitem" id="mobile-logout-link">Log Out</a></li>
             </ul>
+            <!-- Auth Buttons in Nav (desktop) -->
+            <div class="nav-auth" id="nav-auth">
+                <button class="button outline small" id="nav-login-btn">Log In</button>
+                <button class="button primary small" id="nav-signup-btn">Sign Up Free</button>
+            </div>
+            <!-- Logged-in user badge (hidden by default) -->
+            <div class="nav-user" id="nav-user" style="display:none;">
+                <span class="user-greeting" id="user-greeting">Hi, there</span>
+                <button class="button outline small" id="nav-logout-btn">Log Out</button>
+            </div>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
@@ -78,8 +187,8 @@
                         We create eye-catching visuals and persuasive descriptions tailored to your brand.
                     </p>
                     <div class="hero-cta">
-                        <a href="#try-product" class="button primary large">Try It with Your Logo</a>
-                        <a href="#services" class="button outline large">Explore Services</a>
+                        <a href="#try-product" class="button primary large" id="hero-try-btn">Try It Free — Sign Up Now</a>
+                        <a href="#smb-value" class="button outline large">See How We Help SMBs</a>
                     </div>
                 </div>
                 <div class="hero-image">
@@ -99,6 +208,126 @@
                     <span class="stat-number">99%</span>
                     <span class="stat-label">Satisfaction Rate</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SMB VALUE PROPOSITION SECTION ===== -->
+    <section id="smb-value" class="section section-smb">
+        <div class="container">
+            <span class="badge">Built for Small &amp; Medium Businesses</span>
+            <h2 class="section-title">How WeMarket4U Transforms Your Business</h2>
+            <p class="section-subtitle">Whether you're a solo entrepreneur or a growing team — here's exactly how we help you compete with the big players</p>
+
+            <div class="smb-grid">
+                <div class="smb-card">
+                    <div class="smb-card-icon">&#x1F630;</div>
+                    <h3>The Problem</h3>
+                    <p>Small businesses spend <strong>20+ hours/week</strong> creating product images and listings manually. That's time you could spend growing.</p>
+                </div>
+                <div class="smb-card smb-card-solution">
+                    <div class="smb-card-icon">&#x2705;</div>
+                    <h3>Our Solution</h3>
+                    <p>Our AI generates <strong>professional product images and descriptions in under 30 seconds</strong>. Just upload your logo, describe what you want, and we do the rest.</p>
+                </div>
+
+                <div class="smb-card">
+                    <div class="smb-card-icon">&#x1F4B8;</div>
+                    <h3>The Problem</h3>
+                    <p>Hiring a graphic designer costs <strong>$500–$2,000 per project</strong>. For SMBs, that budget simply doesn't exist.</p>
+                </div>
+                <div class="smb-card smb-card-solution">
+                    <div class="smb-card-icon">&#x1F389;</div>
+                    <h3>Our Solution</h3>
+                    <p>Get <strong>unlimited AI-generated visuals for free</strong> during your trial. No hidden fees, no credit card, no contracts.</p>
+                </div>
+
+                <div class="smb-card">
+                    <div class="smb-card-icon">&#x1F4C9;</div>
+                    <h3>The Problem</h3>
+                    <p>Without market data, you're <strong>guessing at pricing, trends, and customer preferences</strong> — and losing sales.</p>
+                </div>
+                <div class="smb-card smb-card-solution">
+                    <div class="smb-card-icon">&#x1F4CA;</div>
+                    <h3>Our Solution</h3>
+                    <p>Our <strong>live market analysis dashboard</strong> gives you real-time competitor insights, trending keywords, and pricing recommendations.</p>
+                </div>
+            </div>
+
+            <!-- Detailed Benefits -->
+            <div class="smb-benefits">
+                <h3 class="smb-benefits-title">Everything You Get — At Zero Cost to Start</h3>
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <span class="benefit-icon">&#x1F3A8;</span>
+                        <div>
+                            <h4>AI-Powered Image Generation</h4>
+                            <p>Upload your logo, describe your product, and receive a stunning marketing image in seconds. Perfect for social media, e-commerce listings, flyers, and ads. Our AI understands branding, composition, and what converts.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">&#x1F4DD;</span>
+                        <div>
+                            <h4>Smart Product Descriptions</h4>
+                            <p>Along with every image, we generate an SEO-optimized product description. Copy-paste it directly into your Shopify, Amazon, Etsy, or WooCommerce listing and watch your click-through rates climb.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">&#x1F4E7;</span>
+                        <div>
+                            <h4>Instant Email Delivery</h4>
+                            <p>Every generated image and description is automatically emailed to you in high resolution. No downloads to fumble with — it's ready in your inbox for immediate use in campaigns.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">&#x1F4CA;</span>
+                        <div>
+                            <h4>Live Market Intelligence</h4>
+                            <p>See what your competitors are doing. Our dashboard tracks pricing trends, keyword performance, and customer sentiment so you can make data-backed decisions — not guesses.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">&#x1F3F7;&#xFE0F;</span>
+                        <div>
+                            <h4>E-Commerce Listing Optimization</h4>
+                            <p>We don't just create images — we optimize your entire listing. From title and bullet points to backend keywords, we help you rank higher and sell more on every platform.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">&#x1F91D;</span>
+                        <div>
+                            <h4>Dedicated SMB Support</h4>
+                            <p>Our team understands the unique challenges of small and medium businesses. Get personalized guidance, quick responses, and strategies tailored to businesses with limited budgets and resources.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Proof -->
+            <div class="smb-testimonials">
+                <h3 class="smb-benefits-title">What SMB Owners Say</h3>
+                <div class="testimonial-grid">
+                    <blockquote class="testimonial-card">
+                        <p>"I used to spend $800/month on a freelance designer. WeMarket4U replaced that completely — my Etsy sales went up 40% in the first month."</p>
+                        <cite>— Priya M., Handmade Jewelry (Small Business)</cite>
+                    </blockquote>
+                    <blockquote class="testimonial-card">
+                        <p>"The market analysis tool showed me I was underpricing by 25%. I adjusted and my profit margins doubled within weeks."</p>
+                        <cite>— Carlos R., Electronics Reseller (Medium Business)</cite>
+                    </blockquote>
+                    <blockquote class="testimonial-card">
+                        <p>"As a solopreneur, I can't afford a marketing team. WeMarket4U IS my marketing team. The AI images look like they cost thousands."</p>
+                        <cite>— Sarah K., Fitness Coach (Freelancer)</cite>
+                    </blockquote>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="smb-cta">
+                <h3>Ready to Level Up Your Business?</h3>
+                <p>Join 500+ small and medium businesses already growing faster with WeMarket4U</p>
+                <button class="button primary large" id="smb-signup-btn">&#x1F680; Create Your Free Account</button>
+                <p class="smb-cta-note">No credit card &bull; No contracts &bull; Generate images in seconds</p>
             </div>
         </div>
     </section>
@@ -180,7 +409,26 @@
                 <p class="section-subtitle">Generate an on‑brand visual in seconds — just add your prompt and logo</p>
             </div>
 
-            <div class="try-layout">
+            <!-- Login Gate (shown when not logged in) -->
+            <div id="try-login-gate" class="try-login-gate">
+                <div class="gate-content">
+                    <div class="gate-icon">&#x1F512;</div>
+                    <h3>Sign In to Start Generating</h3>
+                    <p>Create a free account or log in to access the AI image generator. It only takes 30 seconds!</p>
+                    <div class="gate-buttons">
+                        <button class="button primary large" id="gate-signup-btn">&#x1F680; Sign Up Free</button>
+                        <button class="button outline large" id="gate-login-btn">Log In</button>
+                    </div>
+                    <ul class="trust-row" aria-label="Assurances">
+                        <li>&#x1F512; Secure &amp; Private</li>
+                        <li>&#x26A1; 30-second signup</li>
+                        <li>&#x1F4B3; No credit card needed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Actual Try Form (shown when logged in) -->
+            <div id="try-content" class="try-layout" style="display:none;">
                 <!-- Form Column -->
                 <div class="try-form-col">
                     <form id="try-form" enctype="multipart/form-data" novalidate aria-describedby="try-help">
@@ -273,7 +521,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!-- /try-content -->
         </div>
     </section>
 
@@ -302,7 +550,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <img src="backend/logo.jpg" alt="WeMarket4U logo" width="48" height="48" class="footer-logo-img" loading="lazy" />
+                    <img src="src/images/logo.svg" alt="WeMarket4U logo" width="48" height="48" class="footer-logo-img" loading="lazy" />
                     <span class="logo-text">WeMarket<span class="logo-accent">4U</span></span>
                     <p>AI-powered marketing that helps your business stand out.</p>
                 </div>
@@ -311,6 +559,7 @@
                     <ul>
                         <li><a href="#home">Home</a></li>
                         <li><a href="#about">About</a></li>
+                        <li><a href="#smb-value">For SMBs</a></li>
                         <li><a href="#services">Services</a></li>
                         <li><a href="#try-product">Try Now</a></li>
                         <li><a href="#history-section">My History</a></li>
@@ -329,6 +578,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script defer src="src/scripts/auth.js"></script>
     <script defer src="src/scripts/app.js"></script>
     <script>
         // Mobile nav toggle

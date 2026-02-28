@@ -9,6 +9,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const OpenAI = require('openai');
 const sharp = require('sharp');
+const bcrypt = require('bcryptjs');
 const {
     findOrCreateLead,
     createGeneration,
@@ -389,6 +390,101 @@ app.post('/api/track', express.json(), async (req, res) => {
     } catch (e) {
         res.status(500).json({ error: 'tracking_failed' });
     }
+});
+
+// ===== AUTH ROUTES =====
+const USERS_FILE = path.join(__dirname, 'data', 'users.json');
+
+function loadUsers() {
+    try {
+        if (fs.existsSync(USERS_FILE)) {
+            return JSON.parse(fs.readFileSync(USERS_FILE, 'utf-8'));
+        }
+    } catch (e) {
+        console.error('Error reading users file:', e.message);
+    }
+    return [];
+}
+
+function saveUsers(users) {
+    const dir = path.dirname(USERS_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2), 'utf-8');
+}
+
+// Signup
+app.post('/api/signup', async (req, res) => {
+    try {
+        const { name, email, phone, business, businessType, password } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Name, email, and password are required.' });
+        }
+        if (password.length < 6) {
+            return res.status(400).json({ message: 'Password must be at least 6 characters.' });
+        }
+
+        const users = loadUsers();
+        if (users.find(u => u.email.toLowerCase() === email.toLowerCase())) {
+            return res.status(409).json({ message: 'An account with this email already exists. Please log in.' });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = {
+            id: Date.now(),
+            name,
+            email: email.toLowerCase(),
+            phone: phone || '',
+            business: business || '',
+            businessType: businessType || '',
+            password: hashedPassword,
+            createdAt: new Date().toISOString(),
+        };
+
+        users.push(newUser);
+        saveUsers(users);
+        console.log(`New user registered: ${email}`);
+
+        const { password: _, ...safeUser } = newUser;
+        res.status(201).json({ message: 'Account created successfully!', id: newUser.id, user: safeUser });
+    } catch (e) {
+        console.error('Signup error:', e.message);
+        res.status(500).json({ message: 'Server error during signup.' });
+    }
+});
+
+// Login
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: 'Email and password are required.' });
+        }
+
+        const users = loadUsers();
+        const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+        if (!user) {
+            return res.status(401).json({ message: 'No account found with this email. Please sign up.' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Incorrect password. Please try again.' });
+        }
+
+        console.log(`User logged in: ${email}`);
+        const { password: _, ...safeUser } = user;
+        res.json({ message: 'Login successful!', user: safeUser });
+    } catch (e) {
+        console.error('Login error:', e.message);
+        res.status(500).json({ message: 'Server error during login.' });
+    }
+});
+
+// Get all users (admin endpoint — protect in production)
+app.get('/api/users', (req, res) => {
+    const users = loadUsers().map(({ password, ...u }) => u);
+    res.json({ count: users.length, users });
 });
 
 // Error handler for upload issues
